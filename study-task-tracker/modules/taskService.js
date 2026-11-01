@@ -1,21 +1,30 @@
-const { randomUUID } = require('crypto');
+const { randomUUID, createHash } = require('node:crypto');
 const { readTasks, saveTasks } = require('./fileStorage');
+const eventEmitter = require('./eventLogger');
 
 const addTask = async (title) => {
     const tasks = await readTasks();
+
+    const id = randomUUID();
+    const createdAt = new Date().toISOString();
+    const hash = createHash('sha256')
+        .update(`${id}-${title}-${createdAt}`)
+        .digest('hex');
+
     const task = {
-        id: randomUUID(),
+        id,
         title,
         completed: false,
-        createdAt: new Date().toISOString(),
+        createdAt,
+        hash,
     };
     tasks.push(task);
     await saveTasks(tasks);
-    console.log(`Task added: ${task.title}`);
+    eventEmitter.emit('taskCreated', task);
     return task;
 };
 
-const getTasks = async () => await readTasks();
+const getTasks = () => readTasks();
 
 const completeTask = async (id) => {
     const tasks = await readTasks();
@@ -25,19 +34,19 @@ const completeTask = async (id) => {
     }
     task.completed = true;
     await saveTasks(tasks);
-    console.log(`Task completed: ${task.title}`);
+    eventEmitter.emit('taskCompleted', task);
     return task;
 };
 
 const deleteTask = async (id) => {
     const tasks = await readTasks();
     const index = tasks.findIndex((task) => task.id === id);
-    if (index == -1) {
+    if (index === -1) {
         return null;
     }
     const deletedTask = tasks.splice(index, 1)[0];
     await saveTasks(tasks);
-    console.log(`Task deleted: ${deletedTask.title}`);
+    eventEmitter.emit('taskDeleted', deletedTask);
     return deletedTask;
 };
 
