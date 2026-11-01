@@ -1,14 +1,21 @@
 const {addTask, getTasks, completeTask, deleteTask} = require('./modules/taskService');
 const formatTask = require('./modules/taskFormatter');
+const {initStorage, readTasks, saveTasks} = require('./modules/fileStorage');
 
-const task1 = addTask('Learn Node.js modules');
-const task2 = addTask('Practice fs module');
-const task3 = addTask('Practice crypto module');
+const main = async () => {
+    await initStorage();
 
-getTasks().forEach(formatTask);
+    const task1 = await addTask('Learn Node.js modules');
+    const task2 = await addTask('Practice fs module');
+    const task3 = await addTask('Practice crypto module');
 
-completeTask(task1.id);
+    const tasks = await getTasks();
 
-deleteTask(task3.id);
+    tasks.forEach((task) => {
+        console.log(formatTask(task));
+    });
+};
 
-getTasks().forEach(formatTask);
+main().catch((error) => {
+    console.error('Application error:', error);
+});
