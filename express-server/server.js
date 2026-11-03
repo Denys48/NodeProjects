@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express();
 
+app.use((req, res, next) =>{
+    console.log(`${req.method} ${req.url} - ${new Date().toLocaleString('uk-UA')}`);
+    next();
+});
+
 app.get('/', (req, res) =>{
     res.send('Головна сторінка.');
-})
+});
 
 app.get('/about', (req, res) => {
     res.send('Сторінка "Про нас".');
@@ -40,8 +45,27 @@ app.get('/search', (req, res) => {
     res.send(`Ви шукали: ${query}`);
 });
 
+app.get('/crash', (req, res) => {
+  throw new Error('Тестова помилка');
+});
+
+app.post('/feedback', express.json(), (req, res) => {
+    const { name, message } = req.body;
+    if(!name){
+        return res.status(400).send('Поле name є обов\'язковим');
+    }
+    res.send(`Дякуємо, ${name}! Ваш відгук отримано.`);
+});
+
+app.use(express.static('public'));
+
 app.use((req, res) => {
     res.status(404).send('Сторінку не знайдено');
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Щось пішло не так!');
 });
 
 app.listen(3000, () => {
