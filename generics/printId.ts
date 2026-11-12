@@ -11,3 +11,5 @@ user.email;   // має працювати, тип не втрачено
 
 // printId({ id: "abc" });       // має бути помилка: id не число
 //Type 'string' is not assignable to type 'number'.
+
+export{}
