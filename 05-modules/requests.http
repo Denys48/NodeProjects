@@ -1,0 +1,61 @@
+### Застосунок слухає :3005 (npm run start:05)
+
+### Усі книжки (з іменем автора)
+GET http://localhost:3005/books
+
+### Усі автори
+GET http://localhost:3005/authors
+
+### Одна книжка
+GET http://localhost:3005/books/1
+
+### Один автор
+GET http://localhost:3005/authors/1
+
+### Книжка, якої не існує (404)
+GET http://localhost:3005/books/999
+
+### Створити книжку з існуючим authorId
+POST http://localhost:3005/books
+Content-Type: application/json
+
+{
+  "title": "Інтернат",
+  "authorId": 1,
+  "year": 2017
+}
+
+### Створити книжку з НЕіснуючим authorId (404)
+POST http://localhost:3005/books
+Content-Type: application/json
+
+{
+  "title": "Щось",
+  "authorId": 999,
+  "year": 2020
+}
+
+### Створити автора
+POST http://localhost:3005/authors
+Content-Type: application/json
+
+{
+  "name": "Сергій Жадан",
+  "country": "Україна"
+}
+
+### Оновити книжку
+PUT http://localhost:3005/books/1
+Content-Type: application/json
+
+{
+  "title": "Кобзар (повне видання)",
+  "authorId": 1,
+  "year": 1840
+}
+
+### Видалити книжку (204)
+DELETE http://localhost:3005/books/2
+
+### Видалити автора (204)
+DELETE http://localhost:3005/authors/2
