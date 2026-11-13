@@ -30,6 +30,7 @@ exports.BooksModule = BooksModule = __decorate([
         imports: [authors_module_1.AuthorsModule],
         controllers: [books_controller_1.BooksController],
         providers: [books_service_1.BooksService],
+        exports: [books_service_1.BooksService]
     })
 ], BooksModule);
 //# sourceMappingURL=books.module.js.map

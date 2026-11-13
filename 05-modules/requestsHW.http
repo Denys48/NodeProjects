@@ -1,0 +1,42 @@
+
+### Усі рецензії
+GET http://localhost:3005/reviews
+
+### Усі рецензії на книгу
+GET http://localhost:3005/reviews?bookId=1
+
+### Створення рецензії
+POST http://localhost:3005/reviews
+Content-Type: application/json
+
+{
+  "bookId": 1,
+  "text": "Відгук на книгу",
+  "rating": 5
+}
+
+### Видалення рецензії
+DELETE http://localhost:3005/reviews/1
+
+### Некоректний рейтинг
+POST http://localhost:3005/reviews
+Content-Type: application/json
+
+{
+  "bookId": 1,
+  "text": "Рейтингом 5 не передати враження від цієї книги",
+  "rating": 6
+}
+
+### Неіснуюча книга (404)
+POST http://localhost:3005/reviews
+Content-Type: application/json
+
+{
+  "bookId": 999,
+  "text": "Відгук на книгу",
+  "rating": 4
+}
+
+### Видалення неіснуючої рецензії (404)
+DELETE http://localhost:3005/reviews/30000

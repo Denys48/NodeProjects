@@ -18,12 +18,13 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const books_module_1 = require("./books/books.module");
 const authors_module_1 = require("./authors/authors.module");
+const reviews_module_1 = require("./reviews/reviews.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [books_module_1.BooksModule, authors_module_1.AuthorsModule],
+        imports: [books_module_1.BooksModule, authors_module_1.AuthorsModule, reviews_module_1.ReviewsModule],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

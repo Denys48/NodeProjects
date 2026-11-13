@@ -8,6 +8,7 @@
  * тільки тепер причина не "забули providers", а "забули imports".
  * Пов'язані файли: ../authors/authors.module.ts (звідки імпортуємо),
  * books.service.ts (використовує AuthorsService).
+ * exports: [BooksService] дозволяє використати цей функціонал при створенні рецензії
  */
 import { Module } from '@nestjs/common';
 import { AuthorsModule } from '../authors/authors.module';
@@ -18,5 +19,6 @@ import { BooksService } from './books.service';
   imports: [AuthorsModule],
   controllers: [BooksController],
   providers: [BooksService],
+  exports: [BooksService]
 })
 export class BooksModule {}
